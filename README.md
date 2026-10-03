@@ -12,4 +12,4 @@ Instead of manually digging through raw configuration files, MacroBase utilizes 
 - **Automated Web Interface:** Browse and select macros visually.
 - **Custom Bundle Generation:** Download only the macros you need with one click.
 
-*Full usage instructions and contribution guidelines will be added once the initial release is stable.*
+*Full usage instructions and contribution guidelines will be added once the site is stable and fully tested.*
