@@ -14,8 +14,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+
+      - name: Debug Workspace Structure
+        run: |
+          pwd
+          ls -R
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -23,7 +26,7 @@ jobs:
           python-version: '3.10'
 
       - name: Run Parser Script
-        run: python3 ${{ github.workspace }}/scripts/build_manifest.py
+        run: python3 scripts/build_manifest.py
 
       - name: Commit and Push if manifest changed
         uses: stefanzweifel/git-auto-commit-action@v5
