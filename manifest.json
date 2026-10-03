@@ -1,0 +1,39 @@
+[
+    {
+        "filename": "macro_examples.cfg",
+        "macros": [
+            {
+                "name": "SHAPE_X",
+                "description": "Homes the printer (if not already homed) and runs the resonance testing sequence (Input Shaping) for the X axis to help eliminate ringing/ghosting in your prints."
+            },
+            {
+                "name": "SHAPE_Y",
+                "description": "Homes the printer (if not already homed) and runs the resonance testing sequence (Input Shaping) for the Y axis to help eliminate ringing/ghosting in your prints."
+            },
+            {
+                "name": "HEAT_CHAMBER",
+                "description": "Homes the printer, moves the toolhead safely to the exact center of your print volume slightly above the bed, and turns on both the heated bed (120\u00b0C) and the part cooling fan (100%)."
+            },
+            {
+                "name": "Z_PROBE_CALIBRATE",
+                "description": "Homes the printer, moves the probe to the direct center of the bed, and initiates Klipper's interactive PROBE_CALIBRATE tool to set your perfect Z-offset."
+            },
+            {
+                "name": "PID_HOTEND",
+                "description": "Homes, moves the nozzle to the center of the bed near the surface, turns the cooling fan to 100%, and runs a thermal PID tuning cycle for the extruder at 200\u00b0C."
+            },
+            {
+                "name": "PID_HOTBED",
+                "description": "Turns the part cooling fan to 100% (to simulate print conditions) and runs a thermal PID tuning cycle for the heated bed at 60\u00b0C."
+            },
+            {
+                "name": "LED_ON",
+                "description": "Turns the configured LED strip on to 100% white brightness."
+            },
+            {
+                "name": "LED_OFF",
+                "description": "Turns the configured LED strip completely off."
+            }
+        ]
+    }
+]
