@@ -18,6 +18,10 @@
             {
                 "name": "HEAT_CHAMBER",
                 "description": "Homes the printer, moves the toolhead safely to the exact center of your print volume slightly above the bed, and turns on both the heated bed (120\u00b0C) and the part cooling fan (100%)."
+            },
+            {
+                "name": "PARK",
+                "description": "Homes the printer (if not already homed) and parks the toolhead at a designated safe location."
             }
         ]
     },
