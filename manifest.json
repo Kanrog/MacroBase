@@ -1,6 +1,28 @@
 [
     {
-        "filename": "macro_examples.cfg",
+        "filename": "MacroBase_LED.cfg",
+        "macros": [
+            {
+                "name": "LED_ON",
+                "description": "Turns the configured LED strip on to 100% white brightness."
+            },
+            {
+                "name": "LED_OFF",
+                "description": "Turns the configured LED strip completely off."
+            }
+        ]
+    },
+    {
+        "filename": "MacroBase_Extras.cfg",
+        "macros": [
+            {
+                "name": "HEAT_CHAMBER",
+                "description": "Homes the printer, moves the toolhead safely to the exact center of your print volume slightly above the bed, and turns on both the heated bed (120\u00b0C) and the part cooling fan (100%)."
+            }
+        ]
+    },
+    {
+        "filename": "MacroBase_Calibrate.cfg",
         "macros": [
             {
                 "name": "SHAPE_X",
@@ -11,24 +33,37 @@
                 "description": "Homes the printer (if not already homed) and runs the resonance testing sequence (Input Shaping) for the Y axis to help eliminate ringing/ghosting in your prints."
             },
             {
-                "name": "HEAT_CHAMBER",
-                "description": "Homes the printer, moves the toolhead safely to the exact center of your print volume slightly above the bed, and turns on both the heated bed (120°C) and the part cooling fan (100%)."
-            },
-            {
                 "name": "Z_PROBE_CALIBRATE",
                 "description": "Homes the printer, moves the probe to the direct center of the bed, and initiates Klipper's interactive PROBE_CALIBRATE tool to set your perfect Z-offset."
             },
             {
                 "name": "PID_HOTEND",
-                "description": "Homes, moves the nozzle to the center of the bed near the surface, turns the cooling fan to 100%, and runs a thermal PID tuning cycle for the extruder at 200°C."
+                "description": "Homes, moves the nozzle to the center of the bed near the surface, turns the cooling fan to 100%, and runs a thermal PID tuning cycle for the extruder. Uses the TEMP parameter or defaults to 200\u00b0C."
             },
             {
-                "name": "LED_ON",
-                "description": "Turns the configured LED strip on to 100% white brightness."
+                "name": "PID_HOTBED",
+                "description": "Homes, moves the nozzle to the center of the bed near the surface, turns the cooling fan to 100%, and runs a thermal PID tuning cycle for the heated bed. Uses the TEMP parameter or defaults to 60\u00b0C."
+            }
+        ]
+    },
+    {
+        "filename": "MacroBase_Buzz.cfg",
+        "macros": [
+            {
+                "name": "BUZZ_Z",
+                "description": "Oscillates the Z-axis stepper motor (moves 1mm in each direction 10 times) to verify correct wiring and rotation direction."
             },
             {
-                "name": "LED_OFF",
-                "description": "Turns the configured LED strip completely off."
+                "name": "BUZZ_X",
+                "description": "Oscillates the X-axis stepper motor (moves 1mm in each direction 10 times) to verify correct wiring and rotation direction."
+            },
+            {
+                "name": "BUZZ_Y",
+                "description": "Oscillates the Y-axis stepper motor (moves 1mm in each direction 10 times) to verify correct wiring and rotation direction."
+            },
+            {
+                "name": "BUZZ_E",
+                "description": "Oscillates the extruder stepper motor (moves 1mm in each direction 10 times) to verify correct wiring and rotation direction."
             }
         ]
     }
