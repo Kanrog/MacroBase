@@ -20,18 +20,31 @@
         <nav class="top-nav">
             <button id="btn-select-all" class="nav-btn">Select All</button>
             <button id="btn-clear" class="nav-btn">Clear Selection</button>
-            <button id="btn-download" class="nav-btn action-btn">Download Selected ZIP</button>
         </nav>
     </header>
 
     <main>
         <div class="header-banner">
             <h2>MACROBASE REPOSITORY</h2>
-            <p>Select the configuration files you want to include on your printer.</p>
+            <p>Select the exact macros you want to include on your printer.</p>
+            
+            <div class="instructions-panel">
+                <h3>How to use MacroBase:</h3>
+                <ul>
+                    <li><strong>Browse:</strong> Look through the categories below to find macros that fit your needs.</li>
+                    <li><strong>Select:</strong> Click individual macros to add them to your bundle. You can also click a category title to instantly select or deselect all macros within that group.</li>
+                    <li><strong>Download:</strong> Once you are happy with your selection, scroll to the bottom and click the download button.</li>
+                    <li><strong>Install:</strong> Extract the downloaded folder directly into your Klipper configuration directory and add <code>[include MacroBase.cfg]</code> to your <code>printer.cfg</code> file.</li>
+                </ul>
+            </div>
         </div>
 
         <!-- The parsed macro cards will be injected here by script.js -->
         <div id="macro-grid" class="grid-container"></div>
+
+        <div class="bottom-actions">
+            <button id="btn-download" class="nav-btn action-btn">Download Selected ZIP</button>
+        </div>
     </main>
 
     <script src="script.js"></script>
