@@ -22,6 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
             grid.innerHTML = `<p style="text-align:center; grid-column: 1/-1; color: var(--accent-pink);">No macros found. Ensure the GitHub Action has run and generated manifest.json.</p>`;
         });
 
+    function escapeHtml(text) {
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
     function renderCards(data) {
         grid.innerHTML = "";
         data.forEach((fileObj, fileIndex) => {
@@ -37,9 +46,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     <li class="macro-item" data-macroindex="${macroIndex}">
                         <div class="macro-item-header">
                             <span class="macro-name">${macro.name}</span>
-                            <span class="checkbox"></span>
+                            <div class="macro-item-controls">
+                                <button type="button" class="preview-btn" title="Toggle G-code Preview">Show Macro</button>
+                                <span class="checkbox"></span>
+                            </div>
                         </div>
                         <div class="macro-desc">${macro.description}</div>
+                        <div class="macro-preview-container" style="display: none;">
+                            <pre class="macro-code"><code>${escapeHtml(macro.raw_code)}</code></pre>
+                        </div>
                     </li>
                 `;
             });
@@ -70,8 +85,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 updateCardSelectionState(card, macroItems);
             });
 
-            // Event listener for individual macros
+            // Event listener for individual macros and preview toggles
             macroItems.forEach(item => {
+                const previewBtn = item.querySelector(".preview-btn");
+                const previewContainer = item.querySelector(".macro-preview-container");
+
+                previewBtn.addEventListener("click", (e) => {
+                    e.stopPropagation(); // Prevent triggering item selection
+                    const isVisible = previewContainer.style.display === "block";
+                    previewContainer.style.display = isVisible ? "none" : "block";
+                    previewBtn.textContent = isVisible ? "Show Macro" : "Hide Macro";
+                });
+
                 item.addEventListener("click", () => {
                     item.classList.toggle("selected");
                     updateCardSelectionState(card, macroItems);
@@ -111,7 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const zip = new JSZip();
         
-        // Build detailed instructions inside MacroBase.cfg
         let masterIncludeText = "# =====================================================\n";
         masterIncludeText += "# KANROG CREATIONS - MACROBASE CONFIGURATION\n";
         masterIncludeText += "# =====================================================\n";
@@ -124,41 +148,31 @@ document.addEventListener("DOMContentLoaded", () => {
         masterIncludeText += "#    by placing a '#' at the beginning of the include line.\n";
         masterIncludeText += "# =====================================================\n\n";
 
-        // Change button state to show progress
         const originalText = btnDownload.innerText;
         btnDownload.innerText = "Zipping...";
         btnDownload.disabled = true;
 
         try {
-            // Loop over our manifest data to maintain file structures
             manifestData.forEach((fileObj, fileIndex) => {
-                // Find which macros are selected in the DOM for this file
                 const card = document.querySelector(`.card[data-fileindex="${fileIndex}"]`);
                 if (!card) return;
 
                 const selectedMacroElements = card.querySelectorAll(".macro-item.selected");
-                if (selectedMacroElements.length === 0) return; // Skip file entirely if no macros are selected
+                if (selectedMacroElements.length === 0) return;
 
-                // Start assembling the file with its original header instructions
                 let fileContent = fileObj.file_header ? fileObj.file_header + "\n\n" : "";
                 
-                // Append only the selected G-code blocks
                 selectedMacroElements.forEach(el => {
                     const macroIndex = el.dataset.macroindex;
                     fileContent += fileObj.macros[macroIndex].raw_code;
                 });
 
-                // Add the assembled .cfg directly to the zip root (flattened)
                 zip.file(fileObj.filename, fileContent);
-                
-                // Add to the master include text referencing the root filename
                 masterIncludeText += `[include ${fileObj.filename}]\n`;
             });
 
-            // Add the master MacroBase.cfg to the zip root
             zip.file("MacroBase.cfg", masterIncludeText);
 
-            // Generate and trigger download
             const blob = await zip.generateAsync({ type: "blob" });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
@@ -173,7 +187,6 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Download failed:", error);
             alert("An error occurred while generating the ZIP file.");
         } finally {
-            // Restore button
             btnDownload.innerText = originalText;
             btnDownload.disabled = false;
         }

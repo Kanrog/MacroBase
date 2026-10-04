@@ -301,3 +301,47 @@ main {
     font-size: 1.2rem;
     padding: 1rem 2rem;
 }
+
+/* Macro Preview Styles */
+.macro-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.preview-btn {
+    background-color: rgba(0, 210, 255, 0.1);
+    color: var(--accent-blue);
+    border: 1px solid var(--accent-blue);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.preview-btn:hover {
+    background-color: var(--accent-blue);
+    color: var(--bg-dark);
+}
+
+.macro-preview-container {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.macro-code {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 0.75rem;
+    max-height: 250px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--text-main);
+    white-space: pre-wrap;
+    word-break: break-all;
+}
