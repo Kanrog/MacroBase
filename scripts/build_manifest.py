@@ -18,8 +18,8 @@ def build_manifest():
             with open(filepath, 'r', encoding='utf-8') as f:
                 content = f.read()
 
-            # Matches the format in your macro_examples.cfg
-            pattern = re.compile(r'#\s*@DESC\s*(.+?)\n\[gcode_macro\s*(.*?)\]', re.IGNORECASE)
+            # Flexible regex allowing optional whitespace/newlines between @DESC and macro block
+            pattern = re.compile(r'#\s*@DESC\s*(.+?)(?:\s*\n\s*)+\[gcode_macro\s+(.+?)\]', re.IGNORECASE)
             matches = pattern.findall(content)
 
             macros = []

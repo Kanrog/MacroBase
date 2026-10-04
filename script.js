@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(error => {
             console.error("Error loading macros:", error);
-            grid.innerHTML = `<p style="text-align:center; grid-column: 1/-1; color: var(--accent-pink);">No macros found. Ensure the GitHub Action has run and generated manifest.json.</p>`;
+            grid.innerHTML = `<p style="text-align:center; grid-column: 1/-1; color: var(--accent-pink);">No macros found. Ensure manifest.json exists and the build action has run.</p>`;
         });
 
     function renderCards(data) {
@@ -75,9 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const zip = new JSZip();
-        let masterIncludeText = "# KANROG CREATIONS - MASTER MACRO INCLUDE\n";
-        masterIncludeText += "# Uncomment the files below that you want to enable in your Klipper config\n\n";
+const zip = new JSZip();
+        let masterIncludeText = "# KANROG CREATIONS - MACROBASE\n";
+        masterIncludeText += "# Include this file in your printer.cfg or comment out specific macro groups below as needed.\n\n";
 
         // Change button state to show progress
         const originalText = btnDownload.innerText;
@@ -93,15 +93,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const fileText = await response.text();
                 
-                // Add the .cfg to the zip folder
-                zip.file(filename, fileText);
+                // Add the .cfg to a subfolder inside the zip
+                zip.file(`macros/${filename}`, fileText);
                 
-                // Add to the master include text
-                masterIncludeText += `[include ${filename}]\n`;
+                // Add to the master include text referencing the subfolder path
+                masterIncludeText += `[include macros/${filename}]\n`;
             }
 
-            // Add the master macros.cfg to the zip
-            zip.file("macros.cfg", masterIncludeText);
+            // Add the master MacroBase.cfg to the zip root
+            zip.file("MacroBase.cfg", masterIncludeText);
 
             // Generate and trigger download
             const blob = await zip.generateAsync({ type: "blob" });
