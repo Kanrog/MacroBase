@@ -23,10 +23,6 @@
                 "description": "Homes, moves the nozzle to the center of the bed near the surface, turns the cooling fan to 100%, and runs a thermal PID tuning cycle for the extruder at 200°C."
             },
             {
-                "name": "PID_HOTBED",
-                "description": "Turns the part cooling fan to 100% (to simulate print conditions) and runs a thermal PID tuning cycle for the heated bed at 60°C."
-            },
-            {
                 "name": "LED_ON",
                 "description": "Turns the configured LED strip on to 100% white brightness."
             },
