@@ -110,8 +110,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const zip = new JSZip();
-        let masterIncludeText = "# KANROG CREATIONS - MACROBASE\n";
-        masterIncludeText += "# Include this file in your printer.cfg or comment out specific macro groups below as needed.\n\n";
+        
+        // Build detailed instructions inside MacroBase.cfg
+        let masterIncludeText = "# =====================================================\n";
+        masterIncludeText += "# KANROG CREATIONS - MACROBASE CONFIGURATION\n";
+        masterIncludeText += "# =====================================================\n";
+        masterIncludeText += "# HOW TO USE:\n";
+        masterIncludeText += "# 1. Upload all extracted .cfg files (including this MacroBase.cfg file)\n";
+        masterIncludeText += "#    directly into your Klipper configuration directory via Mainsail/Fluidd.\n";
+        masterIncludeText += "# 2. Add the following line to your main printer.cfg file:\n";
+        masterIncludeText += "#    [include MacroBase.cfg]\n";
+        masterIncludeText += "# 3. To disable any individual macro file below, simply comment it out\n";
+        masterIncludeText += "#    by placing a '#' at the beginning of the include line.\n";
+        masterIncludeText += "# =====================================================\n\n";
 
         // Change button state to show progress
         const originalText = btnDownload.innerText;
@@ -137,11 +148,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     fileContent += fileObj.macros[macroIndex].raw_code;
                 });
 
-                // Add the assembled .cfg to a subfolder inside the zip
-                zip.file(`macros/${fileObj.filename}`, fileContent);
+                // Add the assembled .cfg directly to the zip root (flattened)
+                zip.file(fileObj.filename, fileContent);
                 
-                // Add to the master include text referencing the subfolder path
-                masterIncludeText += `[include macros/${fileObj.filename}]\n`;
+                // Add to the master include text referencing the root filename
+                masterIncludeText += `[include ${fileObj.filename}]\n`;
             });
 
             // Add the master MacroBase.cfg to the zip root
