@@ -147,9 +147,9 @@ main {
 }
 
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
+    column-width: 300px;
+    column-gap: 1.5rem;
+    width: 100%;
 }
 
 .card {
@@ -158,10 +158,12 @@ main {
     border-radius: 12px;
     padding: 1.5rem;
     transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 1.5rem;
     position: relative;
     overflow: hidden;
+    break-inside: avoid;
 }
 
 .card::before {
