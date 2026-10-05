@@ -364,3 +364,24 @@ main {
     color: var(--accent-pink);
     letter-spacing: 0.5px;
 }
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    margin-top: 2.5rem;
+    padding-bottom: 2rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+footer a:hover {
+    color: var(--accent-pink);
+    text-decoration: underline;
+}
