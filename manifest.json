@@ -117,6 +117,27 @@
         ]
     },
     {
+        "filename": "MacroBase_Leveling.cfg",
+        "file_header": "# ==============================================================================\n# MACRO CONFIGURATION & USAGE\n# ==============================================================================\n# HOW TO ENABLE OR DISABLE MACROS:\n# Klipper reads every active macro in this file (If enabled in \"MacroBase.cfg\"). To disable a specific macro \n# so it doesn't appear in your interface or load into Klipper, you must \"comment \n# it out\" by placing a hashtag (#) at the very beginning of every line for \n# that specific macro, starting with the [gcode_macro NAME] line.\n# \n# To re-enable a macro, simply remove the hashtags from the start of its lines.\n# ==============================================================================\n\n",
+        "macros": [
+            {
+                "name": "LEVEL_Z_TILT",
+                "description": "Homes the printer if needed and runs Z_TILT_ADJUST to level dual independent Z stepper motors using a probe.",
+                "raw_code": "#=====================================================\n# LEVEL_Z_TILT\n#=====================================================\n# @DESC Homes the printer if needed and runs Z_TILT_ADJUST to level dual independent Z stepper motors using a probe.\n[gcode_macro LEVEL_Z_TILT]\ndescription: Level dual Z motors\ngcode:\n    {% if \"xyz\" not in printer.toolhead.homed_axes %}\n        G28\n    {% endif %}\n    Z_TILT_ADJUST\n\n"
+            },
+            {
+                "name": "TRAM_BED",
+                "description": "Homes the printer and runs SCREWS_TILT_CALIBRATE to calculate exact manual bed adjustment turns for leveling knobs.",
+                "raw_code": "#=====================================================\n# TRAM_BED\n#=====================================================\n# @DESC Homes the printer and runs SCREWS_TILT_CALIBRATE to calculate exact manual bed adjustment turns for leveling knobs.\n[gcode_macro TRAM_BED]\ndescription: Screw tilt adjust tramming\ngcode:\n    {% if \"xyz\" not in printer.toolhead.homed_axes %}\n        G28\n    {% endif %}\n    SCREWS_TILT_CALIBRATE\n\n"
+            },
+            {
+                "name": "GENERATE_BED_MESH",
+                "description": "Homes the printer, heats the bed, and generates a new automated bed mesh profile.",
+                "raw_code": "#=====================================================\n# GENERATE_BED_MESH\n#=====================================================\n# @DESC Homes the printer, heats the bed, and generates a new automated bed mesh profile.\n[gcode_macro GENERATE_BED_MESH]\ndescription: Calibrate bed mesh\ngcode:\n    {% set BED_TEMP = params.BED_TEMP|default(60)|float %}\n    M117 Heating bed for mesh...\n    M190 S{BED_TEMP}\n    {% if \"xyz\" not in printer.toolhead.homed_axes %}\n        G28\n    {% endif %}\n    BED_MESH_CALIBRATE\n\n"
+            }
+        ]
+    },
+    {
         "filename": "MacroBase_Extras.cfg",
         "file_header": "# ==============================================================================\n# MACRO CONFIGURATION & USAGE\n# ==============================================================================\n# HOW TO ENABLE OR DISABLE MACROS:\n# Klipper reads every active macro in this file (If enabled in \"MacroBase.cfg\"). To disable a specific macro \n# so it doesn't appear in your interface or load into Klipper, you must \"comment \n# it out\" by placing a hashtag (#) at the very beginning of every line for \n# that specific macro, starting with the [gcode_macro NAME] line.\n# \n# To re-enable a macro, simply remove the hashtags from the start of its lines.\n# ==============================================================================\n\n",
         "macros": [
@@ -129,6 +150,22 @@
                 "name": "PARK",
                 "description": "Homes the printer (if not already homed) and parks the toolhead at a designated safe location.",
                 "raw_code": "#=====================================================\n# PARK TOOLHEAD\n#=====================================================\n# INSTRUCTIONS: To change the park location, simply modify the numbers in the X_POS, Y_POS, Z_POS, and SPEED variables below.\n# @DESC Homes the printer (if not already homed) and parks the toolhead at a designated safe location.\n[gcode_macro PARK]\ngcode:\n    {% set X_POS = printer.toolhead.axis_minimum.x + 10 %}\n    {% set Y_POS = printer.toolhead.axis_minimum.y + 10 %}\n    {% set Z_POS = printer.toolhead.axis_maximum.z - 5 %}\n    {% set SPEED = 6000 %}\n\n    {% if \"xyz\" not in printer.toolhead.homed_axes %}\n        G28                            ; home if not already homed\n    {% endif %}\n    G90                              ; absolute positioning\n    G0 X{X_POS} Y{Y_POS} Z{Z_POS} F{SPEED}\n\n"
+            }
+        ]
+    },
+    {
+        "filename": "MacroBase_Maintenance.cfg",
+        "file_header": "# ==============================================================================\n# MACRO CONFIGURATION & USAGE\n# ==============================================================================\n# HOW TO ENABLE OR DISABLE MACROS:\n# Klipper reads every active macro in this file (If enabled in \"MacroBase.cfg\"). To disable a specific macro \n# so it doesn't appear in your interface or load into Klipper, you must \"comment \n# it out\" by placing a hashtag (#) at the very beginning of every line for \n# that specific macro, starting with the [gcode_macro NAME] line.\n# \n# To re-enable a macro, simply remove the hashtags from the start of its lines.\n# ==============================================================================\n\n",
+        "macros": [
+            {
+                "name": "CLEAN_NOZZLE",
+                "description": "Moves the toolhead over a designated maintenance area or brush to clean plastic off the nozzle.",
+                "raw_code": "#=====================================================\n# CLEAN_NOZZLE\n#=====================================================\n# @DESC Moves the toolhead over a designated maintenance area or brush to clean plastic off the nozzle.\n[gcode_macro CLEAN_NOZZLE]\ndescription: Clean nozzle tip\ngcode:\n    {% if \"xyz\" not in printer.toolhead.homed_axes %}\n        G28\n    {% endif %}\n    G90\n    # Adjust X, Y, Z coordinates to match your physical brush location\n    G1 X50 Y50 Z5 F6000\n    G1 X100 Y50 F6000\n    G1 X50 Y50 F6000\n    G1 X100 Y50 F6000\n    G1 Z10 F1000\n\n"
+            },
+            {
+                "name": "MOTOR_OFF",
+                "description": "Disables all stepper motors to allow free movement of the gantry and bed.",
+                "raw_code": "#=====================================================\n# MOTOR_OFF\n#=====================================================\n# @DESC Disables all stepper motors to allow free movement of the gantry and bed.\n[gcode_macro MOTOR_OFF]\ndescription: Disable steppers\ngcode:\n    M84\n\n"
             }
         ]
     },
