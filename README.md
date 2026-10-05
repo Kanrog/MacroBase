@@ -12,4 +12,6 @@ Instead of manually digging through raw configuration files, MacroBase utilizes 
 - **Automated Web Interface:** Browse and select macros visually.
 - **Custom Bundle Generation:** Download only the macros you need with one click.
 
+> **🌐 Live Website:** Check out the interactive web interface at [https://kanrog.com/MacroBase/](https://kanrog.com/MacroBase/).
+
 *Full usage instructions and contribution guidelines will be added once the site is stable and fully tested.*
